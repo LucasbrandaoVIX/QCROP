@@ -1,0 +1,29 @@
+# M3: Joint training of LM + QCROP gate with soft sigmoid mask.
+# Tau anneals 1.0 -> 0.1; sparsity lambda ramps 0 -> 0.01 over warmup.
+# Go criterion: PG19 PPL @ 2k within 0.5 of dense baseline at K = N/2.
+data:
+  dataset: pg19
+  seq_len: 2048
+  batch_size: 16
+model:
+  d_model: 768
+  n_layer: 12
+  n_head: 12
+  use_qcrop: true
+  qcrop_mode: soft
+  qcrop_k_ratio: 0.5            # used at eval-time hard mode only
+  qcrop_tau_start: 1.0
+  qcrop_tau_end: 0.1
+  qcrop_lambda: 0.01
+  qcrop_lambda_warmup: 2000
+  qcrop_kernels: [7, 15, 31]
+  qcrop_summaries: 8
+optim:
+  lr_peak: 3.0e-4
+  lr_warmup: 500
+  total_steps: 30000
+  grad_clip: 1.0
+log:
+  log_every: 50
+  eval_every: 1000
+  ckpt_every: 5000

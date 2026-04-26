@@ -1,0 +1,25 @@
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.ruff_cache/
+.venv/
+venv/
+.env
+*.egg-info/
+dist/
+build/
+
+# data and runs
+data/
+runs/
+checkpoints/
+wandb/
+*.bin
+*.pt
+*.safetensors
+
+# editor
+.vscode/
+.idea/
+.DS_Store

@@ -1,0 +1,28 @@
+# M2: KILL POINT. Frozen LM (loaded from M1 checkpoint) + only the QCROP gate trains.
+# Synthetic passkey retrieval at 4k context, K = N/4.
+# Go criterion: gate top-K accuracy >= 80%, beats recency baseline by >= 15 points.
+data:
+  task: passkey
+  seq_len: 4096
+  batch_size: 16
+  needle_len: 5
+  query_len: 4
+model:
+  d_model: 768
+  n_layer: 12
+  n_head: 12
+  use_qcrop: true
+  qcrop_mode: hard
+  qcrop_k_ratio: 0.25
+  qcrop_kernels: [7, 15, 31]
+  qcrop_summaries: 8
+  freeze_lm: true
+  load_from: checkpoints/m1_baseline_final.pt
+optim:
+  lr_peak: 1.0e-3   # higher LR ok — only the gate trains
+  lr_warmup: 200
+  total_steps: 5000
+  grad_clip: 1.0
+eval:
+  compare_recency_baseline: true
+  log_every: 50

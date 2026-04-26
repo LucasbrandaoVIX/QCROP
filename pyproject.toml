@@ -1,0 +1,31 @@
+[project]
+name = "qcrop"
+version = "0.0.1"
+description = "Query-Conditioned Reduction Of Prefix-tokens for long-context transformers"
+requires-python = ">=3.10"
+dependencies = [
+    "torch>=2.2",
+    "einops>=0.7",
+    "numpy>=1.26",
+    "pyyaml>=6.0",
+    "tqdm>=4.66",
+    "datasets>=2.18",
+    "tiktoken>=0.6",
+]
+
+[project.optional-dependencies]
+gpu = [
+    "flash-attn>=2.5",
+]
+dev = [
+    "pytest>=8.0",
+    "ruff>=0.3",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+ignore = ["E501"]
